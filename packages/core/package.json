@@ -1,7 +1,12 @@
 {
   "name": "@webmark/core",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "description": "Core measurement primitives for webmark — runs Lighthouse and aggregates user-centric performance metrics.",
+  "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

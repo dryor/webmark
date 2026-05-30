@@ -8,7 +8,7 @@ export default defineConfig({
   lib: [
     {
       format: 'esm',
-      syntax: ['node 18'],
+      syntax: ['node 24'],
       dts: false,
       banner: { js: '#!/usr/bin/env node' },
       autoExternal: true,

@@ -1,0 +1,62 @@
+name: Publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      core:
+        description: 'Publish @webmark/core'
+        type: boolean
+        default: true
+      cli:
+        description: 'Publish @webmark/cli'
+        type: boolean
+        default: true
+      dry_run:
+        description: 'Dry run (build, test and pack but do not publish)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm run test
+
+      # @webmark/cli depends on @webmark/core via workspace:*, so the core is
+      # published first. pnpm rewrites workspace:* to the real version on pack.
+      - name: Publish @webmark/core
+        if: ${{ inputs.core }}
+        working-directory: packages/core
+        run: pnpm publish --access public --no-git-checks ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @webmark/cli
+        if: ${{ inputs.cli }}
+        working-directory: packages/cli
+        run: pnpm publish --access public --no-git-checks ${{ inputs.dry_run && '--dry-run' || '' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
