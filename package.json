@@ -8,7 +8,8 @@
     "build": "pnpm -r --filter \"@webmarkjs/*\" build",
     "test": "pnpm -r --filter \"@webmarkjs/*\" test",
     "check": "pnpm -r --filter \"@webmarkjs/*\" check",
-    "version": "changeset version"
+    "version": "changeset version",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0"
