@@ -8,6 +8,19 @@ import type {
   LabMetric,
   MeasureOptions,
   MeasureResult,
+  MetricStats,
+  Webmark,
+} from './types';
+
+export type { Runner, RunSample } from './runner';
+export type { Logger } from './logger';
+export { consoleLogger } from './logger';
+export type {
+  FieldMetric,
+  LabMetric,
+  MeasureOptions,
+  MeasureResult,
+  MetricStats,
   Webmark,
 } from './types';
 

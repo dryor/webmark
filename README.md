@@ -17,5 +17,5 @@ TTI       2.1s    0.3s   (1.7s…2.8s)      2.3s     2.8s
 | Package | Description |
 |---------|-------------|
 | [`@webmark/core`](./packages/core) | Core measurement primitives |
-| `@webmark/cli` *(soon)* | Terminal interface |
+| [`@webmark/cli`](./packages/cli) | Terminal interface |
 | `@webmark/ci` *(soon)* | GitHub Actions — comment results on PRs |

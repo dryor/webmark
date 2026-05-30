@@ -1,14 +1,12 @@
 {
-  "name": "@webmark/core",
+  "name": "@webmark/cli",
   "version": "1.0.0",
+  "description": "Terminal interface for webmark — synthetic web performance measurement with statistical aggregation.",
+  "license": "MIT",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+  "bin": {
+    "webmark": "./dist/index.js"
   },
-  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -17,15 +15,16 @@
     "check": "biome check --write",
     "dev": "rslib --watch",
     "format": "biome format --write",
+    "lint": "biome check",
     "test": "rstest",
     "test:watch": "rstest --watch"
   },
-  "publishConfig": {
-    "access": "public"
-  },
-  "peerDependencies": {
-    "chrome-launcher": ">=1.0.0",
-    "lighthouse": ">=13.0.0"
+  "dependencies": {
+    "@webmark/core": "workspace:*",
+    "cac": "^6.7.14",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.3.0",
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
@@ -33,8 +32,6 @@
     "@rstest/adapter-rslib": "^0.10.2",
     "@rstest/core": "^0.10.2",
     "@types/node": "^24.12.4",
-    "chrome-launcher": "^1.2.1",
-    "lighthouse": "^13.3.0",
     "typescript": "^6.0.3"
   }
 }
