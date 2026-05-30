@@ -8,4 +8,7 @@ export default defineConfig({
       dts: true,
     },
   ],
+  output: {
+    externals: ['lighthouse', 'chrome-launcher'],
+  },
 });

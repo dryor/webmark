@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@webmark/core",
   "version": "1.0.0",
   "type": "module",
   "exports": {
@@ -20,12 +20,18 @@
     "test": "rstest",
     "test:watch": "rstest --watch"
   },
+  "peerDependencies": {
+    "chrome-launcher": ">=1.0.0",
+    "lighthouse": ">=13.0.0"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.4.14",
     "@rslib/core": "^0.22.0",
     "@rstest/adapter-rslib": "^0.10.2",
     "@rstest/core": "^0.10.2",
     "@types/node": "^24.12.4",
+    "chrome-launcher": "^1.2.1",
+    "lighthouse": "^13.3.0",
     "typescript": "^6.0.3"
   },
   "private": true
