@@ -1,5 +1,13 @@
 # @webmarkjs/cli
 
+## 0.0.4
+
+### Patch Changes
+
+- e096f49: Replace `avg` with `p50` (median) in `MetricStats`. The median is a more robust central value for latency distributions — unlike the arithmetic mean, it is not skewed by outlier runs caused by CPU spikes or GC pauses.
+- Updated dependencies [e096f49]
+  - @webmarkjs/core@0.2.0
+
 ## 0.0.3
 
 ### Patch Changes

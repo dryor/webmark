@@ -1,6 +1,6 @@
 {
   "name": "@webmarkjs/cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Terminal interface for webmark — synthetic web performance measurement with statistical aggregation.",
   "keywords": [
     "web performance",
