@@ -1,26 +1,58 @@
 # @webmarkjs/cli
 
-Measure a URL's performance from your terminal. Runs [Lighthouse](https://github.com/GoogleChrome/lighthouse)
-several times and reports the distribution (avg, σ, min/max, p75, p99) instead
-of a single noisy number.
+Measure a URL's web performance from your terminal. Runs Lighthouse the specified number of times and reports the distribution (avg, σ, min, max, p75, p99) instead of a single noisy number.
 
 ## Install
+
+Install globally to use `webmark` anywhere:
 
 ```bash
 npm install -g @webmarkjs/cli
 ```
 
-Or run it once without installing:
+Or run once without installing:
 
 ```bash
 npx @webmarkjs/cli https://example.com
 ```
 
-## Usage
+## Requirements
+
+- **Node.js 24+**
+- **Chrome or Chromium** installed. webmark launches whatever Chrome it finds in headless mode.
+
+If no Chrome is found, the command fails with a clear message:
+
+```
+error: Could not launch Chrome to run the measurement.
+hint:  Install Chrome or Chromium, or point CHROME_PATH at an existing binary.
+```
+
+To use a specific browser:
 
 ```bash
+CHROME_PATH=/usr/bin/chromium webmark https://example.com
+```
+
+## Usage
+
+```
 webmark <url> [options]
 ```
+
+The scheme is optional — `webmark example.com` is treated as `https://example.com`.
+
+### Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `-n, --runs <count>` | `5` | Number of measurement runs |
+| `--json` | off | Output JSON instead of a table |
+| `--silent` | off | Suppress per-run progress on stderr |
+| `-h, --help` | | Show help |
+| `-v, --version` | | Show version |
+
+### Output
 
 ```
 https://example.com/
@@ -32,28 +64,17 @@ CLS     0.022  0.012  (0.000…0.040) 0.031  0.040
 TTI     2.1s   330ms  (1.7s…2.8s)   2.3s   2.8s
 ```
 
-The scheme is optional — `webmark example.com` is measured as
-`https://example.com`.
-
-## Options
-
-| Option               | Default | Description                            |
-| -------------------- | ------- | -------------------------------------- |
-| `-n, --runs <count>` | `5`     | Number of measurement runs             |
-| `--json`             | off     | Output JSON instead of a table         |
-| `--silent`           | off     | Hide per-run progress                  |
-| `-h, --help`         |         | Show help                              |
-| `-v, --version`      |         | Show version                           |
+Color is shown only in an interactive terminal and is disabled by `NO_COLOR`, so piped or redirected output stays plain.
 
 ## Examples
 
-Measure with more runs for a tighter distribution:
+Run more times for a tighter distribution:
 
 ```bash
 webmark https://example.com --runs 10
 ```
 
-Save machine-readable results (data goes to stdout, progress to stderr):
+Save results as JSON (measurements go to stdout, progress to stderr):
 
 ```bash
 webmark https://example.com --json > result.json
@@ -65,37 +86,47 @@ Pipe into `jq`:
 webmark https://example.com --json | jq '.field.lcp.p75'
 ```
 
-Use in a script and check the exit code:
+Suppress progress output entirely:
+
+```bash
+webmark https://example.com --silent
+```
+
+Check the exit code in a script:
 
 ```bash
 webmark https://example.com --silent || echo "measurement failed"
 ```
 
-| Exit code | Meaning                          |
-| --------- | -------------------------------- |
-| `0`       | Success                          |
-| `1`       | Runtime error (e.g. invalid URL) |
-| `2`       | Usage error (e.g. missing URL)   |
+### Exit codes
 
-Color is shown only in an interactive terminal and is disabled by `NO_COLOR`,
-so piped or redirected output stays plain.
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | Runtime error (e.g. invalid URL, Chrome not found) |
+| `2` | Usage error (e.g. missing URL) |
 
-## Requirements
+## JSON output schema
 
-- **Node.js 18+**
-- **Chrome or Chromium installed.** Lighthouse and chrome-launcher ship with
-  the CLI, but the browser itself does not — webmark launches whatever Chrome
-  it finds on your machine in headless mode.
-
-If no Chrome is found, the command fails with a clear message:
-
+```json
+{
+  "url": "https://example.com/",
+  "field": {
+    "lcp": { "avg": 1800, "min": 1500, "max": 2300, "p75": 1900, "p99": 2300, "sd": 210, "values": [...] },
+    "fcp": { ... },
+    "cls": { ... },
+    "ttfb": { ... }
+  },
+  "lab": {
+    "tbt": { ... },
+    "tti": { ... },
+    "si":  { ... }
+  }
+}
 ```
-error: Could not launch Chrome to run the measurement.
-hint:  Install Chrome or Chromium, or point CHROME_PATH at an existing binary.
-```
 
-To use a specific browser, set `CHROME_PATH`:
+Time-based metrics are in milliseconds. CLS is a unitless score.
 
-```bash
-CHROME_PATH=/usr/bin/chromium webmark https://example.com
-```
+## License
+
+MIT
