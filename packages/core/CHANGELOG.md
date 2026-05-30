@@ -1,5 +1,11 @@
 # @webmarkjs/core
 
+## 0.1.1
+
+### Patch Changes
+
+- 398e6f0: Add npm metadata (keywords, homepage, repository, bugs) and rewrite READMEs with full API docs, examples, and requirements.
+
 ## 0.1.0
 
 ### Minor Changes
