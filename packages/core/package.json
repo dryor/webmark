@@ -2,6 +2,27 @@
   "name": "@webmarkjs/core",
   "version": "0.1.0",
   "description": "Core measurement primitives for webmark — runs Lighthouse and aggregates user-centric performance metrics.",
+  "keywords": [
+    "web performance",
+    "lighthouse",
+    "core web vitals",
+    "LCP",
+    "FCP",
+    "CLS",
+    "TTI",
+    "metrics",
+    "statistics",
+    "benchmark"
+  ],
+  "homepage": "https://github.com/dryor/webmarkjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dryor/webmarkjs.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/dryor/webmarkjs/issues"
+  },
   "license": "MIT",
   "type": "module",
   "engines": {

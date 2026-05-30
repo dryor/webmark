@@ -2,6 +2,27 @@
   "name": "@webmarkjs/cli",
   "version": "0.0.2",
   "description": "Terminal interface for webmark — synthetic web performance measurement with statistical aggregation.",
+  "keywords": [
+    "web performance",
+    "lighthouse",
+    "core web vitals",
+    "cli",
+    "LCP",
+    "FCP",
+    "CLS",
+    "TTI",
+    "metrics",
+    "benchmark"
+  ],
+  "homepage": "https://github.com/dryor/webmarkjs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dryor/webmarkjs.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/dryor/webmarkjs/issues"
+  },
   "license": "MIT",
   "type": "module",
   "engines": {
