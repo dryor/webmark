@@ -1,4 +1,4 @@
-import { createWebmark, type Logger, type Webmark } from '@webmark/core';
+import { createWebmark, type Logger, type Webmark } from '@webmarkjs/core';
 import { cac } from 'cac';
 import { CliError, parseRuns, parseUrl, reportError } from './errors';
 import { reportResult } from './output';

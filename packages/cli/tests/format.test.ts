@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@rstest/core';
-import type { MeasureResult, MetricStats } from '@webmark/core';
+import type { MeasureResult, MetricStats } from '@webmarkjs/core';
 import { formatValue, toRows } from '../src/format';
 
 const stats = (avg: number): MetricStats => ({

@@ -1,4 +1,4 @@
-import type { MeasureResult } from '@webmark/core';
+import type { MeasureResult } from '@webmarkjs/core';
 import pc from 'picocolors';
 import { type MetricRow, toRows } from './format';
 

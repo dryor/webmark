@@ -3,7 +3,7 @@ import type {
   LabMetric,
   MeasureResult,
   MetricStats,
-} from '@webmark/core';
+} from '@webmarkjs/core';
 
 type Metric = FieldMetric | LabMetric;
 

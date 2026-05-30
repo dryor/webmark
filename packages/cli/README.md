@@ -1,4 +1,4 @@
-# @webmark/cli
+# @webmarkjs/cli
 
 Measure a URL's performance from your terminal. Runs [Lighthouse](https://github.com/GoogleChrome/lighthouse)
 several times and reports the distribution (avg, σ, min/max, p75, p99) instead
@@ -7,13 +7,13 @@ of a single noisy number.
 ## Install
 
 ```bash
-npm install -g @webmark/cli
+npm install -g @webmarkjs/cli
 ```
 
 Or run it once without installing:
 
 ```bash
-npx @webmark/cli https://example.com
+npx @webmarkjs/cli https://example.com
 ```
 
 ## Usage

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, rs, test } from '@rstest/core';
-import type { MeasureOptions, MeasureResult, Webmark } from '@webmark/core';
+import type { MeasureOptions, MeasureResult, Webmark } from '@webmarkjs/core';
 import { runMeasure } from '../src/cli';
 
 function fakeWebmark(): Webmark & {
