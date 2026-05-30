@@ -6,11 +6,11 @@ Releasing is split into two independent steps, each its own manual GitHub Action
 flowchart TD
     A([Make a change]) --> B[pnpm changeset]
     B --> C[Commit the .changeset/*.md file]
-    C --> D{{Run "Release version" workflow}}
+    C --> D{{Run #quot;Release version#quot; workflow}}
     D --> E[changesets bumps versions<br/>+ writes changelogs]
     E --> F[[PR: chore: version packages]]
     F --> G{Review &amp; merge PR}
-    G --> H{{Run "Publish to npm" workflow}}
+    G --> H{{Run #quot;Publish to npm#quot; workflow}}
     H --> I[changeset status guard<br/>then build]
     I --> J[Publish core, then cli]
     J --> K([Live on npm])
