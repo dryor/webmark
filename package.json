@@ -5,9 +5,9 @@
   "private": true,
   "packageManager": "pnpm@10.14.0",
   "scripts": {
-    "build": "pnpm -r --filter \"./packages/*\" build",
-    "test": "pnpm -r --filter \"./packages/*\" test",
-    "check": "pnpm -r --filter \"./packages/*\" check",
+    "build": "pnpm -r --filter \"@webmarkjs/*\" build",
+    "test": "pnpm -r --filter \"@webmarkjs/*\" test",
+    "check": "pnpm -r --filter \"@webmarkjs/*\" check",
     "version": "changeset version"
   },
   "devDependencies": {
