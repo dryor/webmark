@@ -14,7 +14,7 @@ function fakeWebmark(): Webmark & {
         url,
         field: {
           lcp: {
-            avg: 1800,
+            p50: 1800,
             min: 1500,
             max: 2300,
             p75: 1900,
@@ -23,7 +23,7 @@ function fakeWebmark(): Webmark & {
             values: [],
           },
           cls: {
-            avg: 0.02,
+            p50: 0.02,
             min: 0,
             max: 0.04,
             p75: 0.03,
@@ -76,7 +76,7 @@ describe('runMeasure', () => {
 
     const parsed = JSON.parse(cap.output());
     expect(parsed.url).toBe('https://example.com/');
-    expect(parsed.field.lcp.avg).toBe(1800);
+    expect(parsed.field.lcp.p50).toBe(1800);
     expect(parsed.lab).toEqual({});
   });
 

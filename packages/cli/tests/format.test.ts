@@ -2,14 +2,14 @@ import { describe, expect, test } from '@rstest/core';
 import type { MeasureResult, MetricStats } from '@webmarkjs/core';
 import { formatValue, toRows } from '../src/format';
 
-const stats = (avg: number): MetricStats => ({
-  avg,
-  min: avg,
-  max: avg,
-  p75: avg,
-  p99: avg,
+const stats = (p50: number): MetricStats => ({
+  p50,
+  min: p50,
+  max: p50,
+  p75: p50,
+  p99: p50,
   sd: 0,
-  values: [avg],
+  values: [p50],
 });
 
 describe('formatValue', () => {
@@ -41,7 +41,7 @@ describe('toRows', () => {
 
     expect(rows.map((r) => r.metric)).toEqual(['LCP', 'CLS', 'TTI']);
     const lcp = rows[0];
-    expect(lcp.avg).toBe('1.8s');
+    expect(lcp.p50).toBe('1.8s');
     expect(lcp.range).toBe('1.8s…1.8s');
   });
 

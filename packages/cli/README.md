@@ -57,12 +57,14 @@ The scheme is optional — `webmark example.com` is treated as `https://example.
 ```
 https://example.com/
 
-metric  avg    sd     (min…max)     p75    p99
-LCP     1.8s   210ms  (1.5s…2.3s)   1.9s   2.3s
+metric  p50    sd     (min…max)     p75    p99
+LCP     1.7s   210ms  (1.5s…2.3s)   1.9s   2.3s
 FCP     1.1s   130ms  (900ms…1.3s)  1.2s   1.3s
-CLS     0.022  0.012  (0.000…0.040) 0.031  0.040
-TTI     2.1s   330ms  (1.7s…2.8s)   2.3s   2.8s
+CLS     0.021  0.012  (0.000…0.040) 0.031  0.040
+TTI     2.0s   330ms  (1.7s…2.8s)   2.3s   2.8s
 ```
+
+`p50` is the median — the midpoint of the distribution. Unlike the arithmetic mean it is not skewed by outliers (a single slow run caused by a CPU spike won't pull it up).
 
 Color is shown only in an interactive terminal and is disabled by `NO_COLOR`, so piped or redirected output stays plain.
 
@@ -112,7 +114,7 @@ webmark https://example.com --silent || echo "measurement failed"
 {
   "url": "https://example.com/",
   "field": {
-    "lcp": { "avg": 1800, "min": 1500, "max": 2300, "p75": 1900, "p99": 2300, "sd": 210, "values": [...] },
+    "lcp": { "p50": 1700, "min": 1500, "max": 2300, "p75": 1900, "p99": 2300, "sd": 210, "values": [...] },
     "fcp": { ... },
     "cls": { ... },
     "ttfb": { ... }

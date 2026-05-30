@@ -3,11 +3,11 @@ import type { MetricStats } from './types';
 export function computeStats(values: number[]): MetricStats {
   const sorted = [...values].sort((a, b) => a - b);
   const n = sorted.length;
-  const avg = sorted.reduce((s, v) => s + v, 0) / n;
-  const sd = Math.sqrt(sorted.reduce((s, v) => s + (v - avg) ** 2, 0) / n);
+  const mean = sorted.reduce((s, v) => s + v, 0) / n;
+  const sd = Math.sqrt(sorted.reduce((s, v) => s + (v - mean) ** 2, 0) / n);
 
   return {
-    avg,
+    p50: percentile(sorted, 0.5),
     min: sorted[0],
     max: sorted[n - 1],
     p75: percentile(sorted, 0.75),

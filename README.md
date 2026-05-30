@@ -2,16 +2,16 @@
 
 Synthetic web performance measurement focused on user-centric metrics.
 
-A single Lighthouse run is a single data point — it can be skewed by a CPU spike, a network hiccup, or GC. webmark runs multiple times and reports the **distribution** (avg, σ, min, max, p75, p99) instead of a single noisy number.
+A single Lighthouse run is a single data point — it can be skewed by a CPU spike, a network hiccup, or GC. webmark runs multiple times and reports the **distribution** (p50, σ, min, max, p75, p99) instead of a single noisy number.
 
 ```
 https://example.com/
 
-metric  avg    sd     (min…max)     p75    p99
-LCP     1.8s   210ms  (1.5s…2.3s)   1.9s   2.3s
+metric  p50    sd     (min…max)     p75    p99
+LCP     1.7s   210ms  (1.5s…2.3s)   1.9s   2.3s
 FCP     1.1s   130ms  (900ms…1.3s)  1.2s   1.3s
-CLS     0.022  0.012  (0.000…0.040) 0.031  0.040
-TTI     2.1s   330ms  (1.7s…2.8s)   2.3s   2.8s
+CLS     0.021  0.012  (0.000…0.040) 0.031  0.040
+TTI     2.0s   330ms  (1.7s…2.8s)   2.3s   2.8s
 ```
 
 ## Quick start

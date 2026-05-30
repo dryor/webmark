@@ -10,10 +10,10 @@ function fmt(metric: string, value: number): string {
 function printTable(results: Record<string, MetricStats | undefined>) {
   const rows = Object.entries(results).filter(([, s]) => s != null) as [string, MetricStats][]
 
-  const header = ['metric', 'avg', 'sd', '(min … max)', 'p75', 'p99']
+  const header = ['metric', 'p50', 'sd', '(min … max)', 'p75', 'p99']
   const lines = rows.map(([metric, s]) => [
     metric.toUpperCase(),
-    fmt(metric, s.avg),
+    fmt(metric, s.p50),
     fmt(metric, s.sd),
     `(${fmt(metric, s.min)}…${fmt(metric, s.max)})`,
     fmt(metric, s.p75),

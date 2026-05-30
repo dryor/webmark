@@ -2,7 +2,7 @@ export type FieldMetric = 'lcp' | 'fcp' | 'cls' | 'ttfb';
 export type LabMetric = 'tbt' | 'tti' | 'si';
 
 export interface MetricStats {
-  avg: number;
+  p50: number;
   min: number;
   max: number;
   p75: number;

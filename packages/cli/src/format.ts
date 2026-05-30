@@ -45,7 +45,7 @@ export function formatValue(metric: Metric, value: number): string {
 
 export interface MetricRow {
   metric: string;
-  avg: string;
+  p50: string;
   sd: string;
   range: string;
   p75: string;
@@ -56,7 +56,7 @@ function toRow(metric: Metric, stats: MetricStats): MetricRow {
   const fmt = (v: number) => formatValue(metric, v);
   return {
     metric: METRIC_LABEL[metric],
-    avg: fmt(stats.avg),
+    p50: fmt(stats.p50),
     sd: fmt(stats.sd),
     range: `${fmt(stats.min)}…${fmt(stats.max)}`,
     p75: fmt(stats.p75),

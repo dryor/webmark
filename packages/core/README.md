@@ -31,7 +31,7 @@ const result = await webmark.measure(new URL('https://example.com'), { runs: 5 }
 
 console.log(result.field.lcp);
 // {
-//   avg: 1800,
+//   p50: 1700,
 //   min: 1500,
 //   max: 2300,
 //   p75: 1900,
@@ -81,7 +81,7 @@ Each present metric maps to a `MetricStats` object:
 
 ```ts
 interface MetricStats {
-  avg:    number;
+  p50:    number;
   min:    number;
   max:    number;
   p75:    number;

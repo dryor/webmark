@@ -4,7 +4,7 @@ import { type MetricRow, toRows } from './format';
 
 const COLUMNS = [
   { key: 'metric', header: 'metric' },
-  { key: 'avg', header: 'avg' },
+  { key: 'p50', header: 'p50' },
   { key: 'sd', header: 'sd' },
   { key: 'range', header: '(min…max)' },
   { key: 'p75', header: 'p75' },
