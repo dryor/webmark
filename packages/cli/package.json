@@ -14,14 +14,14 @@
     "metrics",
     "benchmark"
   ],
-  "homepage": "https://github.com/dryor/webmarkjs#readme",
+  "homepage": "https://github.com/dryor/webmark#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dryor/webmarkjs.git",
+    "url": "git+https://github.com/dryor/webmark.git",
     "directory": "packages/cli"
   },
   "bugs": {
-    "url": "https://github.com/dryor/webmarkjs/issues"
+    "url": "https://github.com/dryor/webmark/issues"
   },
   "license": "MIT",
   "type": "module",
