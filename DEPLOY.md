@@ -6,21 +6,21 @@ Releasing is split into two independent steps, each its own manual GitHub Action
 flowchart TD
     A([Make a change]) --> B[pnpm changeset]
     B --> C[Commit the .changeset/*.md file]
-    C --> D{{Run #quot;Release version#quot; workflow}}
+    C --> D{{Run #quot;Bump Versions#quot; workflow}}
     D --> E[changesets bumps versions<br/>+ writes changelogs]
     E --> F[[PR: chore: version packages]]
     F --> G{Review &amp; merge PR}
-    G --> H{{Run #quot;Publish to npm#quot; workflow}}
+    G --> H{{Run #quot;Publish Packages#quot; workflow}}
     H --> I[changeset status guard<br/>then build]
     I --> J[Publish core, then cli]
     J --> K([Live on npm])
 
-    subgraph version [Process 1 · version · release.yml]
+    subgraph version [Step 1 · Bump Versions · release.yml]
         D
         E
         F
     end
-    subgraph publish [Process 2 · publish · publish.yml]
+    subgraph publish [Step 2 · Publish Packages · publish.yml]
         H
         I
         J
@@ -41,7 +41,7 @@ git commit -m "chore: add changeset for <description>"
 
 ### 2. Version — open the bump PR
 
-Go to **Actions → Release (version)** and click **Run workflow**. The workflow:
+Go to **Actions → Bump Versions** and click **Run workflow**. The workflow:
 
 - Consumes all pending `.changeset/*.md` files
 - Bumps the `version` field in each affected `package.json`
@@ -56,7 +56,7 @@ Review the PR. The diff should show only version bumps and changelog entries. Me
 
 ### 4. Publish — push to npm
 
-Go to **Actions → Publish to npm** and click **Run workflow**. You can choose to publish only `core`, only `cli`, or both.
+Go to **Actions → Publish Packages** and click **Run workflow**. You can choose to publish only `core`, only `cli`, or both.
 
 The workflow:
 
