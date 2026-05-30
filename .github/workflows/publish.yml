@@ -35,6 +35,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # Pending changesets mean versions weren't bumped yet — run Release first.
+      - name: Ensure versions are bumped
+        run: pnpm exec changeset status
+
       - name: Build
         run: pnpm run build
 

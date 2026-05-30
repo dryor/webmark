@@ -1,20 +1,21 @@
-import { computeStats } from './stats';
+import { createAggregator } from './aggregator';
 import { lighthouseRunner } from './runner';
-import { consoleLogger } from './logger';
+import { consoleReporter, noopReporter } from './reporter';
 import type { Runner } from './runner';
-import type { Logger } from './logger';
+import type { Reporter } from './reporter';
 import type {
   FieldMetric,
   LabMetric,
   MeasureOptions,
   MeasureResult,
-  MetricStats,
   Webmark,
 } from './types';
 
+export { createAggregator } from './aggregator';
+export type { Aggregator } from './aggregator';
 export type { Runner, RunSample } from './runner';
-export type { Logger } from './logger';
-export { consoleLogger } from './logger';
+export type { Reporter } from './reporter';
+export { consoleReporter } from './reporter';
 export type {
   FieldMetric,
   LabMetric,
@@ -26,59 +27,48 @@ export type {
 
 interface WebmarkOptions {
   runner?: Runner;
-  logger?: Logger;
+  reporter?: Reporter;
 }
 
 export function createWebmark({
   runner = lighthouseRunner,
-  logger = consoleLogger,
+  reporter = consoleReporter,
 }: WebmarkOptions = {}): Webmark {
   return {
     async measure(
       url: URL,
       { runs = 5, silent = false }: MeasureOptions = {},
     ): Promise<MeasureResult> {
-      const field: Record<FieldMetric, number[]> = {
-        lcp: [],
-        fcp: [],
-        cls: [],
-        ttfb: [],
-      };
-      const lab: Record<LabMetric, number[]> = { tbt: [], tti: [], si: [] };
+      const emit = silent ? noopReporter : reporter;
+      const field = createAggregator<FieldMetric>();
+      const lab = createAggregator<LabMetric>();
+
+      emit.onMeasureStart?.(url, runs);
 
       for (let i = 0; i < runs; i++) {
-        if (!silent) logger.onRunStart(i + 1, runs, url);
-        const sample = await runner(url);
-        if (!silent) logger.onRunEnd(i + 1, runs);
-
-        for (const [metric, value] of Object.entries(sample.field) as [
-          FieldMetric,
-          number,
-        ][]) {
-          field[metric].push(value);
-        }
-
-        for (const [metric, value] of Object.entries(sample.lab) as [
-          LabMetric,
-          number,
-        ][]) {
-          lab[metric].push(value);
+        const run = i + 1;
+        emit.onRunStart?.(run, runs, url);
+        try {
+          const sample = await runner(url);
+          field.add(sample.field);
+          lab.add(sample.lab);
+          emit.onRunEnd?.(run, runs);
+        } catch (error) {
+          // A failed run (CPU spike, timeout) drops its sample but doesn't sink the batch.
+          emit.onError?.(run, error);
         }
       }
 
-      return {
+      const result: MeasureResult = {
         url,
-        field: Object.fromEntries(
-          Object.entries(field)
-            .filter(([, values]) => values.length > 0)
-            .map(([metric, values]) => [metric, computeStats(values)]),
-        ) as MeasureResult['field'],
-        lab: Object.fromEntries(
-          Object.entries(lab)
-            .filter(([, values]) => values.length > 0)
-            .map(([metric, values]) => [metric, computeStats(values)]),
-        ) as MeasureResult['lab'],
+        field: field.collect(),
+        lab: lab.collect(),
       };
+
+      emit.onMeasureEnd?.(result);
+      return result;
     },
   };
 }
+
+

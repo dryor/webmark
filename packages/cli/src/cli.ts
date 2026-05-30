@@ -1,14 +1,18 @@
-import { createWebmark, type Logger, type Webmark } from '@webmarkjs/core';
+import { createWebmark, type Reporter, type Webmark } from '@webmarkjs/core';
 import { cac } from 'cac';
 import { CliError, parseRuns, parseUrl, reportError } from './errors';
 import { reportResult } from './output';
 
-const stderrLogger: Logger = {
+const stderrReporter: Reporter = {
   onRunStart(run, total, url) {
     process.stderr.write(`run ${run}/${total} — ${url.href}\n`);
   },
   onRunEnd(run, total) {
     process.stderr.write(`run ${run}/${total} done\n`);
+  },
+  onError(run, error) {
+    const message = error instanceof Error ? error.message : String(error);
+    process.stderr.write(`run ${run} failed: ${message}\n`);
   },
 };
 
@@ -55,7 +59,7 @@ export async function main(argv: string[], version: string): Promise<number> {
           json: Boolean(flags.json),
           silent: Boolean(flags.silent),
         },
-        createWebmark({ logger: stderrLogger }),
+        createWebmark({ reporter: stderrReporter }),
       );
     });
 
