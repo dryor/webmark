@@ -20,7 +20,7 @@ function fakeWebmark(): Webmark & {
             p75: 1900,
             p99: 2300,
             sd: 200,
-            values: [],
+            values: [1500, 1800, 2300],
           },
           cls: {
             p50: 0.02,
@@ -29,7 +29,7 @@ function fakeWebmark(): Webmark & {
             p75: 0.03,
             p99: 0.04,
             sd: 0.01,
-            values: [],
+            values: [0, 0.02, 0.04],
           },
         },
         lab: {},
@@ -65,7 +65,7 @@ describe('runMeasure', () => {
     expect(wm.calls[0].options).toEqual({ runs: 7, silent: true });
   });
 
-  test('emits parseable JSON in --json mode', async () => {
+  test('JSON output contains the full MetricStats schema for each metric', async () => {
     const cap = captureStdout();
     await runMeasure(
       'https://example.com',
@@ -76,11 +76,18 @@ describe('runMeasure', () => {
 
     const parsed = JSON.parse(cap.output());
     expect(parsed.url).toBe('https://example.com/');
-    expect(parsed.field.lcp.p50).toBe(1800);
-    expect(parsed.lab).toEqual({});
+
+    const lcp = parsed.field.lcp;
+    expect(lcp.p50).toBe(1800);
+    expect(lcp.min).toBe(1500);
+    expect(lcp.max).toBe(2300);
+    expect(lcp.p75).toBe(1900);
+    expect(lcp.p99).toBe(2300);
+    expect(lcp.sd).toBe(200);
+    expect(lcp.values).toEqual([1500, 1800, 2300]);
   });
 
-  test('renders a human table with formatted values by default', async () => {
+  test('table output contains the correct headers and formatted values', async () => {
     const cap = captureStdout();
     await runMeasure(
       'https://example.com',
@@ -91,6 +98,10 @@ describe('runMeasure', () => {
 
     const out = cap.output();
     expect(out).toContain('https://example.com/');
+    expect(out).toContain('p50');
+    expect(out).toContain('sd');
+    expect(out).toContain('p75');
+    expect(out).toContain('p99');
     expect(out).toContain('LCP');
     expect(out).toContain('1.8s');
     expect(out).toContain('0.020');
